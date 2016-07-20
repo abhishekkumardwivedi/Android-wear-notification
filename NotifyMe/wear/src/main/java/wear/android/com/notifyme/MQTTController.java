@@ -19,7 +19,7 @@ public class MQTTController {
     //Convert it to array of table number for having multiple tables assigned
     public static String TABLE_NO = "1";
 
-    private static final String DEFAULT_BROKER = "192.168.0.101";
+    private static final String DEFAULT_BROKER = "192.168.0.100";
     private static final String DEFAULT_PORT = "8884";
     private static String CLIENT_ID = "testClient123";
 
@@ -73,7 +73,7 @@ public class MQTTController {
     }
 
     public static interface CallBack {
-        void updateMessage(String msg);
+        void updateMessage(String place, String msg);
     }
 
     public void registerTableOrderListener(CallBack callback) {
@@ -81,9 +81,12 @@ public class MQTTController {
     }
 
     public static void MqttMessageHandler(String s, MqttMessage mqttMessage) {
+        String tbl = s.split("/")[2];
+        Log.d(TAG, "Message = " + tbl);
+
         String  data = parseMqttMessage(mqttMessage);
         if (s.equals(TOPIC_TABLE_NO) && tableOrderListener != null) {
-            tableOrderListener.updateMessage(data);
+            tableOrderListener.updateMessage(tbl, data);
         }
     }
 
