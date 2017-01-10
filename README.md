@@ -1,3 +1,3 @@
-# wearable
+# Android Smart Watch
 
-Sample application to get notification on warable/SmartWatch.
+Getting notification over MQTT in smart watch.
